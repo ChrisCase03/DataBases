@@ -1,0 +1,141 @@
+CREATE DATABASE GameShop
+USE GameShop
+
+
+
+
+CREATE TABLE Employees(EmployeeID int primary key auto_increment, Name varchar(50), StoreCode int, isActive boolean);
+
+CREATE TABLE Customers(CustomerID int primary key auto_increment, Name varchar(50), Points int, RegDate int);
+
+CREATE TABLE Stores(StoreID int primary key auto_increment, Address varchar(50),City varchar(20),EmployeeID int);
+
+CREATE TABLE Products(ProductID int primary key auto_increment, GameID int, PlatformID int,  Price double(5,2),UsedPercent Double (3,2), BuyBackPercent Double (5,2), DiscountPercent Double (5,2));
+
+CREATE TABLE Platforms(PlatformID int primary key auto_increment, isCurrentGen boolean, ReleaseDate int);
+
+CREATE TABLE Transactions(TransactionID int primary key auto_increment,StoreNum int, CustNum int, EmployeeNum int, ProductNum int, TransDateTime int, Quantity int, PaymentAmount Double (5,2));
+
+CREATE TABLE GamesxTags(GameNum int , TagNum int )
+
+CREATE TABLE Tags(TagID int primary key auto_increment, Tag varchar(50));
+
+CREATE TABLE Inventory(InventoryID int primary key auto_increment, StoreID int, ProdcutID int, isUsed boolean, Quantity int);
+
+CREATE TABLE Games (GameID int primary key auto_increment, Title varchar(50), ESRB_Rating char(1), ReleaseDate int, Franchise varchar(50));
+
+
+ ALTER TABLE GamesxTags ADD CONSTRAINT fk_TagNum FOREIGN KEY(TagID) REFERENCES Tags(TagID);
+
+ALTER TABLE GamesxTags ADD CONSTRAINT fk_GameNum FOREIGN KEY(GameID) REFERENCES Games(GameID);
+ 
+ ALTER TABLE Employees ADD CONSTRAINT fk_StoreCode FOREIGN KEY(StoreID) REFERENCES Stores(StoreID);
+
+ALTER TABLE Stores ADD CONSTRAINT fk_EmployeeID FOREIGN KEY(EmployeeID) REFERENCES Employees(EmployeeID);
+
+
+ ALTER TABLE Inventory ADD CONSTRAINT fk_StoreID FOREIGN KEY(StoreID) REFERENCES Stores(StoreID);
+
+ ALTER TABLE Inventory ADD CONSTRAINT fk_ProductID FOREIGN KEY(ProductID) REFERENCES Products(ProductID);
+
+ ALTER TABLE Products ADD CONSTRAINT fk_GameID FOREIGN KEY(GameID) REFERENCES Games(GameID);
+
+
+ ALTER TABLE Products ADD CONSTRAINT fk_PlatformID FOREIGN KEY(PlatformID) REFERENCES Platforms(PlatformID);
+
+ ALTER TABLE Transactions ADD CONSTRAINT fk_StoreNum FOREIGN KEY(StoreID) REFERENCES Stores(StoreID);
+
+
+ALTER TABLE Transactions ADD CONSTRAINT fk_CusNum FOREIGN KEY(CustomerID) REFERENCES Customers(CustomerID);
+
+
+ ALTER TABLE Transactions ADD CONSTRAINT fk_EmployeeNum FOREIGN KEY(EmployeeID) REFERENCES Employees(EmployeeID);
+
+
+ALTER TABLE Transactions ADD CONSTRAINT fk_ProductNum FOREIGN KEY(ProductID) REFERENCES Products(ProductID);
+
+
+ INSERT INTO Games values (0, "Call of Duty Modern Warfare", "M", 20090908, "Call of Duty");
+
+
+ INSERT INTO Games values (0, "Crash Bandicoot Crash in Time", "E", 19900505, "Crash Bandicoot");
+
+
+ INSERT INTO Games values (0, "Metal Gear Solid V", "M", 20150505, "Metal Gear Solid");
+
+
+
+
+
+ INSERT INTO Employees values (0, "Dave Dude", 1,1);
+
+
+ INSERT INTO Employees values (0, "Stephanie Girl", 2, 0);
+
+
+ INSERT INTO Employees values (0, "Ray McBro", 3, 1);
+
+
+
+ INSERT INTO Stores values (0, "12343 The Street","CoolTown",1);
+
+
+ INSERT INTO Stores values (0, "45455 Avenue Road","WackVilleTown",null);
+
+ INSERT INTO Stores values (0, "999 Jabroni Road","Nibiru",3);
+
+
+ INSERT INTO PlatForms values (0, 1,200091407);
+
+
+ INSERT INTO PlatForms values (0, 0,20121506);
+
+
+ INSERT INTO PlatForms values (0, 1,20110909);
+
+
+
+ INSERT INTO Tags values (0, "Multiplayer");
+
+
+ INSERT INTO Tags values (0, "open world");
+
+
+ INSERT INTO Tags values (0, "RPG");
+
+
+ INSERT INTO Customers values (0, "Duderino", 100,20120607);
+
+
+ INSERT INTO Customers values (0, "Brochacho", 2,20180511);
+
+
+ INSERT INTO Customers values (0, "GirlieGirl", 500,19890612);
+
+
+ INSERT INTO Inventory values (0, 1, 1, 0, 25);
+
+
+ INSERT INTO Inventory values (0, 2, 2, 1, 10);
+
+ INSERT INTO Inventory values (0, 3, 3, 1, 30);
+
+
+ INSERT INTO Transactions values (0, 1, 1, 1, 1,20150908,2,69.99);
+
+
+
+ INSERT INTO Transactions values (0, 2, 2, 2, 2,19991212,1,59.99);
+
+
+ INSERT INTO Transactions values (0, 3,3, 3, 3,20051111,2,145.99);
+
+INSERT INTO Products values (0,1,1,59.99,.7,.2,.4)
+
+INSERT INTO Products values (0,2,2,69.99,.3,.1,.4)
+
+INSERT INTO Products values (0,3,3,59.99,.9,.5,.4)
+
+INSERT INTO GamesxTags values (1,1)
+INSERT INTO GamesxTags values (2,1)
+INSERT INTO GamesxTags values (3,2)
